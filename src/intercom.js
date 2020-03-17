@@ -1,5 +1,3 @@
-import { useEffect } from "react"
-
 // Set your APP_ID
 export const APP_ID = "YOUR_APP_ID"
 
@@ -21,10 +19,8 @@ export const boot = (options = {}) => {
 // change. This does two things:
 // 1. Send an update to Intercom to create an impression on the current URL
 // 2. Fetch any messages that should be delivered based on the URL and user
-export const useIntercom = () => {
-  useEffect(() => {
-    window && window.Intercom && window.Intercom("update")
-  }, [])
+export const update = () => {
+  window && window.Intercom && window.Intercom("update")
 }
 
 // Clears user session and unloads messages

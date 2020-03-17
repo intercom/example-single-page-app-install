@@ -1,15 +1,14 @@
 import React, { useState } from "react"
-import { Router, Link } from "@reach/router"
+import { Router, Link, LocationProvider, createHistory } from "@reach/router"
 import {
   load as loadIntercom,
   boot as bootIntercom,
-  useIntercom,
+  update as updateIntercom,
   shutdown as shutdownIntercom
 } from "./intercom"
 import "./App.css"
 
 const Home = () => {
-  useIntercom()
   return (
     <>
       <header className="App-header">React with Intercom!</header>
@@ -27,7 +26,6 @@ const Home = () => {
 }
 
 const About = () => {
-  useIntercom()
   return (
     <>
       <header className="App-header">Example about page</header>
@@ -87,28 +85,38 @@ const UserForm = () => {
   )
 }
 
+const history = createHistory(window)
+
+history.listen(() => {
+  // Calls Intercom('update') on every page change
+  console.log("up")
+  updateIntercom()
+})
+
 function App() {
   loadIntercom()
   // Pass user info to boot if the user is already logged in.
   bootIntercom({ email: localStorage.email })
 
   return (
-    <div className="App">
-      <UserForm />
+    <LocationProvider history={history}>
+      <div className="App">
+        <UserForm />
 
-      <nav className="App-nav">
-        Try changing pages{" "}
-        <span role="img" aria-label="point right">
-          👉
-        </span>
-        <Link to="/">Home</Link> | <Link to="about">About</Link>
-      </nav>
+        <nav className="App-nav">
+          Try changing pages{" "}
+          <span role="img" aria-label="point right">
+            👉
+          </span>
+          <Link to="/">Home</Link> | <Link to="about">About</Link>
+        </nav>
 
-      <Router>
-        <Home path="/" />
-        <About path="about" />
-      </Router>
-    </div>
+        <Router>
+          <Home path="/" />
+          <About path="about" />
+        </Router>
+      </div>
+    </LocationProvider>
   )
 }
 
