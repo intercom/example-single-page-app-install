@@ -1,4 +1,4 @@
-# Single-page app example Intercom installation for visitors
+# Single-page app example Intercom installation for logged-in users
 
 See different branches for different examples of single-page apps.
 
