@@ -4,7 +4,7 @@ import {
   load as loadIntercom,
   boot as bootIntercom,
   useIntercom,
-  shutdown
+  shutdown as shutdownIntercom
 } from "./intercom"
 import "./App.css"
 
@@ -60,7 +60,7 @@ const UserForm = () => {
   }
 
   const handleLogout = () => {
-    shutdown()
+    shutdownIntercom()
     setLoggedIn(false)
     delete localStorage.email
   }
