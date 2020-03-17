@@ -1,5 +1,7 @@
 # Single-page app example Intercom installation for visitors
 
+See different branches for different examples of single-page apps.
+
 ## React with Reach Router
 
 This is an example of one way to integrate Intercom into your React app with Reach Router.
