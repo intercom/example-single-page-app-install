@@ -18,3 +18,7 @@ export const boot = (options = {}) => {
 export const update = () => {
   window && window.Intercom && window.Intercom("update")
 }
+
+export const shutdown = () => {
+  window && window.Intercom && window.Intercom("shutdown")
+}
