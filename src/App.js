@@ -1,14 +1,14 @@
 import React from "react"
-import { Router, Link } from "@reach/router"
+import { Router, Switch, Route, Link } from "react-router-dom"
+import { createBrowserHistory } from "history"
 import {
   load as loadIntercom,
   boot as bootIntercom,
-  useIntercom
+  update as updateIntercom
 } from "./intercom"
 import "./App.css"
 
 const Home = () => {
-  useIntercom()
   return (
     <>
       <header className="App-header">React with Intercom!</header>
@@ -26,10 +26,9 @@ const Home = () => {
 }
 
 const About = () => {
-  useIntercom()
   return (
     <>
-      <header className="App-header">Example about page</header>
+      <header className="App-header">Example About</header>
 
       <p>
         See <code>App.js</code> to see how to hook into routing to send updates
@@ -39,24 +38,37 @@ const About = () => {
   )
 }
 
+const history = createBrowserHistory()
+
+history.listen(location => {
+  // Calls Intercom('update') on every page change
+  updateIntercom()
+})
+
 function App() {
   loadIntercom()
   bootIntercom()
 
   return (
-    <div className="App">
-      <nav className="App-nav">
-        Try changing pages{" "}
-        <span role="img" aria-label="point right">
-          👉
-        </span>
-        <Link to="/">Home</Link> | <Link to="about">About</Link>
-      </nav>
-      <Router>
-        <Home path="/" />
-        <About path="about" />
-      </Router>
-    </div>
+    <Router history={history}>
+      <div className="App">
+        <nav className="App-nav">
+          Try changing pages{" "}
+          <span role="img" aria-label="point right">
+            👉
+          </span>
+          <Link to="/">Home</Link> | <Link to="/about">About</Link>
+        </nav>
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   )
 }
 

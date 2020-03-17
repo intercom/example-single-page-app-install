@@ -2,9 +2,9 @@
 
 See different branches for different examples of single-page apps.
 
-## React with Reach Router
+## React with React Router
 
-This is an example of one way to integrate Intercom into your React app with Reach Router.
+This is an example of one way to integrate Intercom into your React app with React Router.
 
 ### Setup
 
