@@ -26,3 +26,8 @@ export const useIntercom = () => {
     window && window.Intercom && window.Intercom("update")
   }, [])
 }
+
+// Clears user session and unloads messages
+export const shutdown = () => {
+  window && window.Intercom && window.Intercom("shutdown")
+}

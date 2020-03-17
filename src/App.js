@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import { Router, Link } from "@reach/router"
 import {
   load as loadIntercom,
   boot as bootIntercom,
-  useIntercom
+  useIntercom,
+  shutdown
 } from "./intercom"
 import "./App.css"
 
@@ -39,12 +40,60 @@ const About = () => {
   )
 }
 
+const UserForm = () => {
+  const [email, setEmail] = useState(localStorage.email)
+  const [loggedIn, setLoggedIn] = useState(!!email)
+
+  // This is just an example, replace the name and created_at with real values!
+  // You can add other user details too: https://developers.intercom.com/installing-intercom/docs/javascript-api-attributes-objects
+  const handleLogin = async e => {
+    e.preventDefault()
+    // Fake login response from "server" with user data
+    const user = await Promise.resolve({
+      email,
+      name: "Jane Doe",
+      created_at: new Date().getTime() / 1000
+    })
+    bootIntercom(user)
+    setLoggedIn(true)
+    localStorage.email = user.email
+  }
+
+  const handleLogout = () => {
+    shutdown()
+    setLoggedIn(false)
+    delete localStorage.email
+  }
+
+  return (
+    <div className="App-userForm">
+      {loggedIn ? (
+        <div>
+          Hi {email}! <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <form onSubmit={handleLogin}>
+          Try logging in{" "}
+          <span role="img" aria-label="point right">
+            👉
+          </span>
+          <input onChange={e => setEmail(e.target.value)} />
+          <button type="submit">Login</button>
+        </form>
+      )}
+    </div>
+  )
+}
+
 function App() {
   loadIntercom()
-  bootIntercom()
+  // Pass user info to boot if the user is already logged in.
+  bootIntercom({ email: localStorage.email })
 
   return (
     <div className="App">
+      <UserForm />
+
       <nav className="App-nav">
         Try changing pages{" "}
         <span role="img" aria-label="point right">
@@ -52,6 +101,7 @@ function App() {
         </span>
         <Link to="/">Home</Link> | <Link to="about">About</Link>
       </nav>
+
       <Router>
         <Home path="/" />
         <About path="about" />
