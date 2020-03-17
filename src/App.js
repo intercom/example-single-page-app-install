@@ -63,6 +63,8 @@ const UserForm = () => {
     shutdownIntercom()
     setLoggedIn(false)
     delete localStorage.email
+    // Boot intercom into anonymous visitor mode
+    bootIntercom()
   }
 
   return (
