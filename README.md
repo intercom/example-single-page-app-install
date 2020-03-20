@@ -9,7 +9,7 @@ This is an example of one way to integrate Intercom into your React app with Rea
 ### Setup
 
 1. `yarn install` or `npm install`
-1. Replace `YOUR_APP_ID` with your actual app ID.
+1. Replace [`YOUR_APP_ID`](https://github.com/intercom/example-single-page-app-install/blob/logged-in-react-router/src/intercom.js) with your actual app ID.
    - After logging into Intercom at [https://app.intercom.com](https://app.intercom.com), your app_id is in the URL: `https://app.intercom.com/a/apps/{app_id here}`
 1. `yarn start`
 1. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
